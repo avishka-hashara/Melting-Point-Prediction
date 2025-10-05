@@ -1,18 +1,17 @@
 # app.py
+import utils.session
 import streamlit as st
 import joblib
 import numpy as np
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-# Load the trained model and scaler
 model = joblib.load('rf_model.pkl')
 scaler = joblib.load('scaler.pkl')
 
 st.title("Melting Point Predictor 🔥")
 st.write("Enter a SMILES string to predict the melting point.")
 
-# Function to convert SMILES → 424 features
 def smiles_to_features(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -22,7 +21,6 @@ def smiles_to_features(smiles):
     AllChem.DataStructs.ConvertToNumpyArray(fp, arr)
     return arr
 
-# User input
 smiles_input = st.text_input("SMILES", value="CCO")
 
 # Prediction
